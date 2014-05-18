@@ -139,12 +139,12 @@ class Kandan.Plugins.AdvancedNotifications
     if @fluid_notifications_enabled
       window.fluid.showGrowlNotification {
         title: "Kandan",
-        description: "#{sender} says:\n\n#{message}",
+        description: "#{sender_name} says:\n\n#{message}",
         priority: 1,
         sticky: true,
         identifier: "kandan",
         #onclick: callbackFunc,
-        icon: '/assets/kandanlogo.png'
+        icon: icon_url
       }
       window.fluid.dockBadge = Kandan.Helpers.Utils.unreadActivities
       window.fluid.requestUserAttention(false) # bounce once
