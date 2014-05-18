@@ -119,9 +119,10 @@ class Kandan.Plugins.AdvancedNotifications
 
   @displayNotification: (sender, message, title)->
     sender_name = sender.username || sender.email
+    icon_url = Kandan.Helpers.Avatars.urlFor(sender, { size: 80 })
 
     if @popups_notifications_enabled && @webkitNotificationsEnabled()
-      notification = window.webkitNotifications.createNotification('/assets/kandanlogo.png', "#{sender_name} says in #{title}:", message)
+      notification = window.webkitNotifications.createNotification(icon_url, "#{sender_name} says in #{title}:", message)
       notification.ondisplay = =>
         setTimeout (->
           notification.cancel()
