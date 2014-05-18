@@ -122,6 +122,9 @@ window.Kandan =
     @initBroadcasterAndSubscribe()
     @registerAppEvents()
 
+    @router = new Kandan.Routers.Main()
+    Backbone.history.start()
+
   # Create a function that is fired only after it has been attempted
   # `limit` times.
   callAfter: (limit, callback) ->
