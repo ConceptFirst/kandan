@@ -118,8 +118,11 @@ class Kandan.Plugins.AdvancedNotifications
     3000
 
   @displayNotification: (sender, message, title)->
+    sender_name = sender.username || sender.email
+    icon_url = Kandan.Helpers.Avatars.urlFor(sender, { size: 80 })
+
     if @popups_notifications_enabled && @webkitNotificationsEnabled()
-      notification = window.webkitNotifications.createNotification('/assets/kandanlogo.png', "#{sender} says in #{title}:", message)
+      notification = window.webkitNotifications.createNotification(icon_url, "#{sender_name} says in #{title}:", message)
       notification.ondisplay = =>
         setTimeout (->
           notification.cancel()
@@ -136,12 +139,12 @@ class Kandan.Plugins.AdvancedNotifications
     if @fluid_notifications_enabled
       window.fluid.showGrowlNotification {
         title: "Kandan",
-        description: "#{sender} says:\n\n#{message}",
+        description: "#{sender_name} says:\n\n#{message}",
         priority: 1,
         sticky: true,
         identifier: "kandan",
         #onclick: callbackFunc,
-        icon: '/assets/kandanlogo.png'
+        icon: icon_url
       }
       window.fluid.dockBadge = Kandan.Helpers.Utils.unreadActivities
       window.fluid.requestUserAttention(false) # bounce once

@@ -123,7 +123,7 @@ class Kandan.Helpers.Channels
 
     if Kandan.Plugins.AdvancedNotifications?.channelNotificationEnabled(activityAttributes.channel_id)
       Kandan.Plugins.AdvancedNotifications.playAudioNotification('channel')
-      Kandan.Plugins.AdvancedNotifications.displayNotification(activityAttributes.user.username || activityAttributes.user.email, activityAttributes.content, activityAttributes.channel.name)
+      Kandan.Plugins.AdvancedNotifications.displayNotification(activityAttributes.user, activityAttributes.content, activityAttributes.channel.name)
 
     if Kandan.Plugins.ChannelActivities?
       Kandan.Plugins.ChannelActivities.notify(activityAttributes.channel_id, @mentioned(activityAttributes.content))
