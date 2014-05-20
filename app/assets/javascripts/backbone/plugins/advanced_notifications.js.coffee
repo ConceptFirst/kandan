@@ -31,18 +31,26 @@ class Kandan.Plugins.AdvancedNotifications
     </li>
   '''
 
+  @channel_list_toggle_template: _.template '''
+    <li class="notification">
+      <label class="channel_list_toggle"><a href="#">toggle channel list</a></label>
+    </li>
+  '''
+
   @render: ($el)->
     $notifications = $("<ul class='advanced_notifications_list'></ul>")
     $el.next().hide()
 
     @initPopupsNotificationsButtons()
     @initFluidNotificationsButtons()
+    @initChannelListToggleButtons()
 
     $el.html($notifications)
 
     @initFluidNotifications($notifications)
     @initWebkitNotifications($notifications)
     @initSoundNotifications($notifications)
+    @initChannelListToggle($notifications)
     @initTargetChannelList($notifications)
 
   @init: ->
@@ -180,6 +188,14 @@ class Kandan.Plugins.AdvancedNotifications
       @isPlaying = true
       setTimeout (=> @isPlaying = false), 1000
       Kandan.Plugins.MusicPlayer.playAudioNotice(type)
+
+  @initChannelListToggle: ($container)->
+    $container.append(@channel_list_toggle_template())
+
+  @initChannelListToggleButtons: ->
+    $(document).on 'click', '.advanced_notifications_list .channel_list_toggle a', (e) =>
+      $('.advanced_notifications_list .channel_list').toggle()
+      false
 
   @initTargetChannelList: (container)->
     channels = Kandan.Helpers.Channels.getCollection()
