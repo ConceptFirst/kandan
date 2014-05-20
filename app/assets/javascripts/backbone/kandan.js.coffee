@@ -34,7 +34,7 @@ window.Kandan =
       ,"VimeoEmbed"
       ,"ImageEmbed"
       ,"LinkEmbed"
-      ,"Attachments"
+      # ,"Attachments"
       ,"MeAnnounce"
       ,"Emoticons"
       ,"Emojis"
