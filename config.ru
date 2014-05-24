@@ -5,6 +5,12 @@ require 'faye'
 require ::File.expand_path("../lib/active_users.rb",  __FILE__)
 require ::File.expand_path("../lib/faye_extensions/devise_auth.rb",  __FILE__)
 
+if ENV["DIGEST_AUTH_USER"] && ENV["DIGEST_AUTH_PASSWORD"]
+  use Rack::Auth::Digest::MD5, "private", "" do |username|
+    username == ENV["DIGEST_AUTH_USER"] && ENV["DIGEST_AUTH_PASSWORD"]
+  end
+end
+
 faye_server = Faye::RackAdapter.new(:mount => "/faye", :timeout => 30)
 faye_server.add_extension(DeviseAuth.new)
 
