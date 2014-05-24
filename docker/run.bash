@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ue
+set -e
 
 rails=$(cd $(dirname $0); cd ..; pwd)
 

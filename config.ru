@@ -5,7 +5,7 @@ require 'faye'
 require ::File.expand_path("../lib/active_users.rb",  __FILE__)
 require ::File.expand_path("../lib/faye_extensions/devise_auth.rb",  __FILE__)
 
-if ENV["DIGEST_AUTH_USER"] && ENV["DIGEST_AUTH_PASSWORD"]
+if ENV["DIGEST_AUTH_USER"].length > 0 && ENV["DIGEST_AUTH_PASSWORD"].length > 0
   use Rack::Auth::Digest::MD5, "private", "" do |username|
     username == ENV["DIGEST_AUTH_USER"] && ENV["DIGEST_AUTH_PASSWORD"]
   end
