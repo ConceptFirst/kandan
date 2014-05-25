@@ -32,6 +32,8 @@ class Kandan.Plugins.Emoticons
     "(yuno)"        : { src : "yuno.jpg", css : "big", title : "yuno"},
     "(owl)"         : { src : "owl.png", css : "small", title : "owl" },
     "(blackcat)"   : { src : "blackcat.png", css : "big", title : "blackcat" },
+    "(millefeuille)" : { src : "millefeuille.png", css : "small", title : "millefeuille" },
+    "(millefeuille-big)" : { src : "millefeuille-big.png", css : "big", title : "millefeuille-big" },
     ":("            : { src : "sad.png", css : "small", title : "sad"},
     "=("            : { src : "sad.png", css : "small", title : "sad"},
     ":)"            : { src : "happy.png", css : "small", title : "happy"},
