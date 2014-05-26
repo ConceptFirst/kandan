@@ -64,8 +64,14 @@ class Kandan.Plugins.AdvancedNotifications
       else
         @disablePopupNotifications()
 
+  # TODO: Modernizr2.8.2以上を使う
+  #      (下記は、同梱のModernizr(2.6.2)が新しいNotificationに対応していなかったので、
+  #       2.8.2からコピーして来たもの。後できちんとModernizrを使うこと)
+  @modernizrNotification: ->
+    'Notification' in window && 'permission' in window.Notification && 'requestPermission' in window
+
   @initWebkitNotifications: (container)->
-    if Modernizr.notification && not window.fluid
+    if @modernizrNotification && not window.fluid
       container.append @popup_notifications_template(checked: @webkitNotificationsEnabled())
 
       if @webkitNotificationsEnabled()
