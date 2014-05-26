@@ -88,17 +88,17 @@ class Kandan.Plugins.AdvancedNotifications
         alert("It looks like notifications are denied for this page.\n\nUse your browser settings to allow notifications for this page.")
       else
         $('.advanced-popup-notifications .switch').prop 'checked', false
-        window.webkitNotifications.requestPermission(=> @onPopupNotificationsEnabled())
+        window.Notification.requestPermission(=> @onPopupNotificationsEnabled())
 
   @disablePopupNotifications: ->
     @popups_notifications_enabled = false
 
   # Returns true if notifications are enabled for this page.
   @webkitNotificationsEnabled: ->
-    window.webkitNotifications.checkPermission() == 0
+    window.Notification.permission == "granted"
 
   @webkitNotificationsDenied: ->
-    window.webkitNotifications.checkPermission() == 2
+    window.Notification.permission == "denied"
 
   # Callback when notifiactions are enabled for the first time
   @onPopupNotificationsEnabled: ->
@@ -136,19 +136,21 @@ class Kandan.Plugins.AdvancedNotifications
     icon_url = Kandan.Helpers.Avatars.urlFor(sender, { size: 80 })
 
     if @popups_notifications_enabled && @webkitNotificationsEnabled()
-      notification = window.webkitNotifications.createNotification(icon_url, "#{sender_name} says in #{title}:", message)
-      notification.ondisplay = =>
+      notification = new window.Notification("#{sender_name} says in #{title}:", {
+        type: "basic",
+        body: message,
+        icon: icon_url
+      })
+      notification.onshow = =>
         setTimeout (->
-          notification.cancel()
-          console.log "cancel"
+          notification.close()
+          console.log "close"
         ), @displayTimeout()
 
       notification.onclick = ->
         window.focus()
-        @cancel()
+        notification.close()
         return
-
-      notification.show()
 
     if @fluid_notifications_enabled
       window.fluid.showGrowlNotification {
