@@ -1,7 +1,7 @@
 class Kandan.Plugins.Emoticons
 
   @options:
-    regex: /\([a-zA-Z]+\)|(:[\w\-+]+:)|(^|\s)+([:|=][\)|\(|P|p])($|\s)/g
+    regex: /\([a-zA-Z0-9_\-]+\)|(:[\w\-+]+:)|(^|\s)+([:|=][\)|\(|P|p])($|\s)/g
     template: _.template '''
       <img class="emoticon-embed <%= css %>" src="/assets/emoticons/<%= src %>" title="<%= title %>" />
     '''
