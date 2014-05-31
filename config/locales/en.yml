@@ -2,6 +2,9 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  errors:
+    messages:
+      no_spaces: "can't include spaces"
   hello: "Hello world"
   activerecord:
     errors:
