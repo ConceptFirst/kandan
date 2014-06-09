@@ -3,9 +3,9 @@ class ActiveUsers
   # TODO has to account for users signed on from multiple devices
   # key: user_id
   # value: {:user => user_object, :client_ids: [] }
-  
+
   @@users = {}
-  
+
   class << self
 
     def add(client_id, user)
@@ -61,6 +61,10 @@ class ActiveUsers
 
     def publish_message(event, user)
       Channel.send("user_#{event}", user) if not event == "update"
+
+      silent_events = []
+      silent_events += %w(connect disconnect) if Setting.my_settings.disable_conn_disconn_activity
+      return if silent_events.include?(event)
 
       FAYE_CLIENT.publish("/app/activities", {
           :event  => "user##{event}",
