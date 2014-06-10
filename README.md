@@ -1,3 +1,5 @@
+![everyleaf-internal/kandan](https://circleci.com/gh/everyleaf-internal/kandan.png?circle-token=master)
+
 Kandan - [Modern Open Source Chat](http://www.kandanapp.com)
 ================================
 [![Build Status](https://travis-ci.org/kandanapp/kandan.png?branch=master)](https://travis-ci.org/kandanapp/kandan)
