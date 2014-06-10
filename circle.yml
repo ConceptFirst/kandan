@@ -1,0 +1,10 @@
+
+machine:
+  ruby:
+    version: 1.9.3-p448
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./docker/deploy.bash
