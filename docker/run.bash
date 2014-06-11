@@ -21,13 +21,23 @@ production:
 YAML
 fi
 
+if (retry_with_sudo docker ps | grep -F -q "8989->3000"); then
+  PRIMARY=8990
+  CURRENT=8989
+else
+  PRIMARY=8989
+  CURRENT=8990
+fi
+
+set -x
+
+# launch
+cmd="docker run -d -p ${PRIMARY}:3000 -e DIGEST_AUTH_USER=$DIGEST_AUTH_USER -e DIGEST_AUTH_PASSWORD=$DIGEST_AUTH_PASSWORD -v $rails:/app -t kandan /app/docker/server.bash"
+retry_with_sudo $cmd
+
 # container stop(or kill) if exists
-ID=$(retry_with_sudo docker ps | grep '8989->3000' | awk '{print $1}')
+ID=$(retry_with_sudo docker ps | grep "${CURRENT}->3000" | awk '{print $1}')
 [[ -n $ID ]] && (
   retry_with_sudo docker stop $ID || retry_with_sudo docker kill $ID
 )
 
-
-# launch
-cmd="docker run -p 8989:3000 -e DIGEST_AUTH_USER=$DIGEST_AUTH_USER -e DIGEST_AUTH_PASSWORD=$DIGEST_AUTH_PASSWORD -v $rails:/app -t kandan /app/docker/server.bash"
-retry_with_sudo $cmd
