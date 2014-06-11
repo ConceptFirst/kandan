@@ -1,6 +1,0 @@
-```console
-$ docker build -t kandan . # or `sudo docker ...`
-$ ./run.bash
-```
-
-Then visit localhost:8989
