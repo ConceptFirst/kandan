@@ -48,7 +48,7 @@ end
 group :development do
   gem 'kandan-count-dev'
   gem 'pry-rails'
-  gem 'quiet_assets'
+  gem 'quiet_assets', group: :production
   gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_caller'
