@@ -30,6 +30,7 @@ window.Kandan =
       # ,"Notifications"
       ,"AdvancedNotifications"
       ,"MusicPlayer"
+      ,"AutoResizeTextarea"
       ,"YouTubeEmbed"
       ,"VimeoEmbed"
       ,"ImageEmbed"
