@@ -86,6 +86,9 @@ class Kandan.Helpers.Channels
 
   @addActivity: (activityAttributes, state, local) ->
     local = local || false
+
+    return if activityAttributes.action == "connect" || activityAttributes.action == "disconnect"
+
     @createChannelIfNotExists(activityAttributes)
 
     if activityAttributes.channel_id
