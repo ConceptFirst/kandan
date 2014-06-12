@@ -24,7 +24,7 @@ window.Kandan =
   registerPlugins: ->
     plugins = [
       "UserList"
-      ,"Pastie"
+      #,"Pastie"
       ,"Mentions"
       ,"ChannelActivities"
       # ,"Notifications"

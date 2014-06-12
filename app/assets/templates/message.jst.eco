@@ -9,7 +9,7 @@
   </span>
 
   <span class="content">
-    <%- @activity.content %>
+    <%- @activity.content.replace(/\n/g, "<br />") %>
   </span>
 
 </div>
