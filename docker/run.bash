@@ -36,6 +36,11 @@ set -x
 cmd="docker run -d -p ${PRIMARY}:3000 -e DIGEST_AUTH_USER=$DIGEST_AUTH_USER -e DIGEST_AUTH_PASSWORD=$DIGEST_AUTH_PASSWORD -v $rails:/app -t kandan /app/docker/server.bash"
 retry_with_sudo $cmd
 
+while (curl -f http://localhost:$PRIMARY);do
+  # waiting $PRIMARY port is listening
+  sleep 1
+done
+
 # container stop(or kill) if exists
 ID=$(retry_with_sudo docker ps | grep "${CURRENT}->3000" | awk '{print $1}')
 [[ -n $ID ]] && (
