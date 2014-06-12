@@ -29,6 +29,7 @@ else
   CURRENT=8990
 fi
 
+# Workaround for Circle CI timeout
 set -x
 
 # launch
