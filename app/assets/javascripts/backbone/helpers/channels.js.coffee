@@ -87,6 +87,7 @@ class Kandan.Helpers.Channels
   @addActivity: (activityAttributes, state, local) ->
     local = local || false
 
+    # イベントの配信自体を止めると ActiveUsers の更新まで止まってしまうので、JS側で出力しないだけにしている
     return if activityAttributes.action == "connect" || activityAttributes.action == "disconnect"
 
     @createChannelIfNotExists(activityAttributes)
