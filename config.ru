@@ -20,7 +20,6 @@ faye_server.add_extension(DeviseAuth.new)
 # via the get_client() method on the server
 
 FAYE_CLIENT = faye_server.get_client
-
 faye_server.bind(:unsubscribe) do |client_id|
   ActiveUsers.remove_by_client_id(client_id)
 end

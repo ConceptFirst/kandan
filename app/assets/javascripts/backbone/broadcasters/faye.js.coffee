@@ -15,11 +15,19 @@ class Kandan.Broadcasters.FayeBroadcaster
     }
     @fayeClient.addExtension(authExtension)
 
+    shouldFetchRecent = false
     @fayeClient.bind "transport:down", ()->
       console.log "Comm link to Cybertron is down!"
+      shouldFetchRecent = true
 
     @fayeClient.bind "transport:up", ()->
       console.log "Comm link is up!"
+      return unless shouldFetchRecent
+      lastId = localStorage.lastId # app/assets/javascripts/backbone/helpers/channels.js.coffee
+      if lastId
+        jQuery.getJSON "/channels/recent.json?since=#{localStorage.lastId}", (activities) ->
+          activities.forEach (activity) ->
+            Kandan.Helpers.Channels.addActivity(activity, Kandan.Helpers.Activities.ACTIVE_STATE, true)
 
     @fayeClient.subscribe "/app/activities", (data)=>
       [entityName, eventName] = data.event.split("#")

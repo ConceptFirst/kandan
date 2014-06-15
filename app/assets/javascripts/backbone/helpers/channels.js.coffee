@@ -112,10 +112,13 @@ class Kandan.Helpers.Channels
 
     @flushActivities(activityAttributes.channel_id)
 
-    # 手元でテストするときは and Kandan.Helpers以下をコメントアウトすると便利
-    if not local and activityAttributes.action == "message" and Kandan.Helpers.Utils.browserTabFocused != true
-      @notify(activityAttributes)
-      @setPaginationData(activityAttributes.channel_id)
+    if not local and activityAttributes.action == "message"
+      lastId = Math.max(activityAttributes.id, localStorage.lastId || 0)
+      localStorage.setItem('lastId', lastId)
+      # 手元でテストするときは Kandan.Helpers以下をコメントアウトすると便利
+      if Kandan.Helpers.Utils.browserTabFocused != true
+        @notify(activityAttributes)
+        @setPaginationData(activityAttributes.channel_id)
 
   @notify: (activityAttributes) ->
     Kandan.Helpers.Utils.notifyInTitle()
