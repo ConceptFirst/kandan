@@ -11,7 +11,7 @@ if ENV["DIGEST_AUTH_USER"] && ENV["DIGEST_AUTH_USER"].length > 0 && ENV["DIGEST_
   end
 end
 
-faye_server = Faye::RackAdapter.new(:mount => "/faye", :timeout => 30)
+faye_server = Faye::RackAdapter.new(:mount => "/faye", :timeout => 5)
 faye_server.add_extension(DeviseAuth.new)
 
 # TODO send pull request to faye to get this fixed
