@@ -20,20 +20,23 @@ class Kandan.Broadcasters.FayeBroadcaster
       console.log "Comm link to Cybertron is down!"
       shouldFetchRecent = true
 
-    @fayeClient.bind "transport:up", ()->
+    @fayeClient.bind "transport:up", ()=>
       console.log "Comm link is up!"
       return unless shouldFetchRecent
-      lastId = localStorage.lastId # app/assets/javascripts/backbone/helpers/channels.js.coffee
-      if lastId
-        jQuery.getJSON "/channels/recent.json?since=#{localStorage.lastId}", (activities) ->
-          activities.forEach (activity) ->
-            Kandan.Helpers.Channels.addActivity(activity, Kandan.Helpers.Activities.ACTIVE_STATE, true)
+      @recentActivities()
 
     @fayeClient.subscribe "/app/activities", (data)=>
       [entityName, eventName] = data.event.split("#")
       @processEventsForUser(eventName, data)        if entityName == "user"
       @processEventsForChannel(eventName, data)     if entityName == "channel"
       @processEventsForAttachments(eventName, data) if entityName == "attachments"
+
+  recentActivities: ->
+    lastId = localStorage.lastId
+    if lastId
+      jQuery.getJSON "/channels/recent.json?since=#{lastId}", (activities) ->
+        activities.forEach (activity) ->
+          Kandan.Helpers.Channels.addActivity(activity, Kandan.Helpers.Activities.ACTIVE_STATE, true)
 
   processEventsForAttachments: (eventName, data)->
     Kandan.Helpers.Channels.addActivity(data.entity, Kandan.Helpers.Activities.ACTIVE_STATE)
@@ -52,9 +55,15 @@ class Kandan.Broadcasters.FayeBroadcaster
     Kandan.Helpers.Channels.renameChannelById(data.entity.id, data.entity.name) if data.eventName == "update"
 
 
-  subscribe: (channel)->
+  subscribe: (channel)=>
     subscription = @fayeClient.subscribe channel, (data)=>
-      Kandan.Helpers.Channels.addActivity(data, Kandan.Helpers.Activities.ACTIVE_STATE)
+      knownLastId = localStorage.lastId # app/assets/javascripts/backbone/helpers/channels.js.coffee
+      console.log knownLastId, data.id
+      if knownLastId && +knownLastId < data.id - 1
+        @recentActivities()
+      else
+        Kandan.Helpers.Channels.addActivity(data, Kandan.Helpers.Activities.ACTIVE_STATE)
+      localStorage.setItem('lastId', data.id)
     subscription.errback((data)->
       console.log "error", data
       alert "Oops! could not connect to the server"
