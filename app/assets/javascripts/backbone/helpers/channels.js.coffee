@@ -10,13 +10,11 @@ class Kandan.Helpers.Channels
     $(document).data("channels", collection.toJSON())
 
   @options:
-    autoScrollThreshold: 0.90
+    autoScrollThreshold: 0.20
 
   @pastAutoScrollThreshold: (channelId) ->
-    currentPosition     = @currentScrollPosition channelId
-    totalHeight         = $(document).height() - $(window).height()
-    scrollPercentage    = (currentPosition) / (totalHeight)
-    scrollPercentage > @options.autoScrollThreshold
+    hiddenPercentage = @distanceToBottom(channelId) / $(document).height()
+    hiddenPercentage < @options.autoScrollThreshold
 
   @scrollToLatestMessage: (channelId) ->
     if channelId
@@ -25,8 +23,12 @@ class Kandan.Helpers.Channels
     else
       $('.channels-pane').scrollTop($('.channels-pane').prop('scrollHeight'))
 
+  @distanceToBottom: (channelId) ->
+    @channelPane(channelId).prop('scrollHeight') - @currentScrollPosition(channelId)
+
   @currentScrollPosition: (channelId) ->
-    $('channels-pane').scrollTop()
+    pane = @channelPane(channelId)
+    pane.scrollTop() + pane.height()
 
   @channelPane: (channelId) ->
     $("#channels-#{channelId}")
