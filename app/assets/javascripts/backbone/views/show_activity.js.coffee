@@ -12,6 +12,7 @@ class Kandan.Views.ShowActivity extends Backbone.View
       when "message"
         activity.content =  Kandan.Modifiers.process(activity)
         @compiledTemplate = Kandan.Helpers.Activities.buildFromMessageTemplate activity
+        @className += 'last-activity' if activity.last
       when "upload"
         file_path = _.unescape(activity.content).split('?')[0].split('/')
         activity.filename = decodeURIComponent(file_path[file_path.length-1])

@@ -119,6 +119,9 @@
     padding: 4px
     margin-top: 3px
 
+  .last
+    display: none
+
   .avatar
     display: block
     float: left
@@ -173,3 +176,21 @@
 .activity,
 .pagination
   border-bottom: 1px solid #DEE6E8
+
+.last-activity
+  .last
+    display: block
+    background: #FFFFBB
+    border-radius: 4px
+    color: #FF7700
+    font-size: 11px
+    float: right
+    text-align: right
+    padding: 4px
+    margin-top: 3px
+    margin-right: 3px
+
+  .readable
+    .content
+      @media (min-width: $medium)
+        width: calc(100% - 110px)

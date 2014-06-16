@@ -108,6 +108,7 @@ class Kandan.Helpers.Channels
     activityExists       = ( $("#activity-#{activityAttributes.id}").length > 0 )
     local = local || false
     console.log !local, !belongsToCurrentUser, !activityExists
+    activityAttributes['last'] = true
 
     if local || (!local && !belongsToCurrentUser && !activityExists)
       @channelActivitiesEl(activityAttributes.channel_id)
