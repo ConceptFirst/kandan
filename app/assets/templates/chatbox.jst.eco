@@ -1,2 +1,2 @@
-<textarea class="chat-input"></textarea>
+<textarea tabindex="1" class="chat-input"></textarea>
 <button class="post">Post</button>
