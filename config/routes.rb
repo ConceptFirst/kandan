@@ -9,6 +9,7 @@ Kandan::Application.routes.draw do
   get '/search' => "main#search"
 
   resources :channels do
+    get "recent", on: :collection
     resources :activities
     resources :attachments
   end

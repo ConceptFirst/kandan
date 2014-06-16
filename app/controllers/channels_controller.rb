@@ -25,6 +25,15 @@ class ChannelsController < ApplicationController
     end
   end
 
+  def recent
+    messages = []
+    Activity.where(action: "message").where("id > ?", params[:since]).each do |activity|
+      _, data = activity.to_message
+      messages << data
+    end
+    render json: messages
+  end
+
   def create
     @channel = Channel.new(params[:channel])
     @channel.user_id = current_user.id
