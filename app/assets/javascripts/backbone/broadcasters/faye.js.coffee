@@ -4,7 +4,7 @@ class Kandan.Broadcasters.FayeBroadcaster
     endpoint = $('body').data('kandan-config').broadcaster.config.endpoint
     @fayeClient = new Faye.Client(endpoint)
 
-    @fayeClient.disable('websocket')
+    # @fayeClient.disable('websocket')
     authExtension = {
       outgoing: (message, callback)->
         if message.channel == "/meta/subscribe"
